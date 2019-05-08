@@ -31,7 +31,11 @@ endif()
 
 set(PACKAGE_NAME ${PROJECT_NAME})
 set(cmake_conf_file "${PROJECT_NAME}-config.cmake")
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/${cmake_conf_file}.in" "${CMAKE_BINARY_DIR}/${cmake_conf_file}" @ONLY)
+if(NOT MSVC)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/${cmake_conf_file}.in" "${CMAKE_BINARY_DIR}/${cmake_conf_file}" @ONLY)
+else()
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/${cmake_conf_file}-win32.in" "${CMAKE_BINARY_DIR}/${cmake_conf_file}" @ONLY)
+endif()
 set(cmake_conf_version_file "${PROJECT_NAME}-config-version.cmake")
 # Use write_basic_package_version_file to generate a ConfigVersion file that
 # allow users of gazebo to specify the API or version to depend on
